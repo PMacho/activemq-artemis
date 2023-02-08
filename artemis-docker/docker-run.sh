@@ -44,6 +44,13 @@ else
     echo "broker already created, ignoring creation"
 fi
 
+EXTRA_CONFIG=${BROKER_HOME}/broker_extra.xml;
+
+if [ -f ${EXTRA_CONFIG} ]; then
+    include_node="<xi:include href="${EXTRA_CONFIG}"/>"
+    sed -i "/<\/core>/i\\      ${include_node}" "${CONFIG_PATH}/etc/broker.xml}"
+fi
+
 exec ./bin/artemis "$@"
 
 
